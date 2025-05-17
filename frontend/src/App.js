@@ -183,7 +183,10 @@ function App() {
             compareResults={compareResults}
             backToComparison={backToComparison}
           />
-          <PerformanceTable result={result} />
+          <div className="process-table-container">
+            <h2 className="section-title">Process Details</h2>
+            <PerformanceTable result={result} />
+          </div>
         </>
       )}
 
