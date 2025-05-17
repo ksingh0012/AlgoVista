@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -9,13 +9,9 @@ function App() {
   const [timeQuanta, setTimeQuanta] = useState(2);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
   const [compareResults, setCompareResults] = useState(null);
   const [showComparison, setShowComparison] = useState(false);
   const [viewingAlgo, setViewingAlgo] = useState(null);
-  
-  const animationRef = useRef(null);
 
   useEffect(() => {
     axios.get('http://localhost:5000/algorithms')
@@ -27,25 +23,6 @@ function App() {
       })
       .catch(() => setError('Failed to fetch algorithms'));
   }, []);
-
-  useEffect(() => {
-    if (isPlaying && result) {
-      const lastTime = result.gantt_chart[result.gantt_chart.length - 1].end_time;
-      
-      if (currentTime >= lastTime) {
-        setIsPlaying(false);
-        return;
-      }
-      
-      animationRef.current = setTimeout(() => {
-        setCurrentTime(prevTime => Math.min(prevTime + 0.1, lastTime));
-      }, 100);
-      
-      return () => {
-        if (animationRef.current) clearTimeout(animationRef.current);
-      };
-    }
-  }, [isPlaying, currentTime, result]);
 
   const handleProcessChange = (index, field, value) => {
     const newProcesses = [...processes];
@@ -66,8 +43,6 @@ function App() {
   const runSchedule = () => {
     setError('');
     setResult(null);
-    setCurrentTime(0);
-    setIsPlaying(false);
     setShowComparison(false);
 
     const payload = {
@@ -81,7 +56,6 @@ function App() {
     axios.post('http://localhost:5000/schedule', payload)
       .then(res => {
         setResult(res.data);
-        setIsPlaying(true);
       })
       .catch(err => setError(err.response?.data?.error || 'Error running schedule'));
   };
@@ -89,8 +63,6 @@ function App() {
   const runAllAlgorithms = async () => {
     setError('');
     setResult(null);
-    setCurrentTime(0);
-    setIsPlaying(false);
     setShowComparison(true);
     
     try {
@@ -134,16 +106,6 @@ function App() {
     }
   };
 
-  const togglePlayPause = () => {
-    if (!result) return;
-    setIsPlaying(!isPlaying);
-  };
-
-  const resetAnimation = () => {
-    setCurrentTime(0);
-    setIsPlaying(false);
-  };
-
   const getProcessColor = (processName) => {
     const colors = [
       '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFBE0B', 
@@ -172,16 +134,12 @@ function App() {
     setSelectedAlgo(algo);
     setResult(data);
     setShowComparison(false);
-    setCurrentTime(0);
-    setIsPlaying(false);
   };
 
   const backToComparison = () => {
     setViewingAlgo(null);
     setResult(null);
     setShowComparison(true);
-    setCurrentTime(0);
-    setIsPlaying(false);
   };
 
   return (
@@ -232,22 +190,6 @@ function App() {
           >
             Compare All Algorithms
           </button>
-          {result && (
-            <>
-              <button 
-                className={`btn ${isPlaying ? 'btn-warning' : 'btn-success'}`}
-                onClick={togglePlayPause}
-              >
-                {isPlaying ? 'Pause' : 'Play'}
-              </button>
-              <button 
-                className="btn btn-gray"
-                onClick={resetAnimation}
-              >
-                Reset
-              </button>
-            </>
-          )}
         </div>
       </div>
 
@@ -370,36 +312,6 @@ function App() {
             </div>
           </div>
 
-          {/* Frame by Frame View */}
-          <h3 className="section-title">Frame by Frame View</h3>
-          <div className="frame-grid">
-            {result.gantt_chart.map((entry, index) => (
-              <div key={index} className="frame-card">
-                <div 
-                  className="frame-process"
-                  style={{
-                    backgroundColor: getProcessColor(entry.name || entry.process_id)
-                  }}
-                >
-                  {entry.name || entry.process_id}
-                </div>
-                <div className="frame-details">
-                  <div>Start Time:</div>
-                  <div>{typeof entry.start_time === 'number' ? entry.start_time.toFixed(1) : 
-                       typeof entry.start === 'number' ? entry.start.toFixed(1) : '-'}</div>
-                  <div>End Time:</div>
-                  <div>{typeof entry.end_time === 'number' ? entry.end_time.toFixed(1) : 
-                       typeof entry.end === 'number' ? entry.end.toFixed(1) : '-'}</div>
-                  <div>Duration:</div>
-                  <div>{(typeof entry.end_time === 'number' && typeof entry.start_time === 'number') ? 
-                        (entry.end_time - entry.start_time).toFixed(1) :
-                       (typeof entry.end === 'number' && typeof entry.start === 'number') ?
-                        (entry.end - entry.start).toFixed(1) : '-'}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
           {/* Process Table */}
           <h2 className="section-title">Process Table</h2>
           <div className="table-container">
@@ -454,6 +366,18 @@ function App() {
               </div>
               <div className="stat-label">Average Response Time</div>
             </div>
+            <div className="stat-card">
+              <div className="stat-value">
+                {result.stats.cpu_utilization.toFixed(2)}%
+              </div>
+              <div className="stat-label">CPU Utilization</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">
+                {result.stats.throughput.toFixed(2)}
+              </div>
+              <div className="stat-label">Throughput (processes/unit time)</div>
+            </div>
           </div>
         </div>
       )}
@@ -472,6 +396,8 @@ function App() {
                   <th>Avg. Turnaround Time</th>
                   <th>Avg. Waiting Time</th>
                   <th>Avg. Response Time</th>
+                  <th>CPU Utilization</th>
+                  <th>Throughput</th>
                   <th>View Details</th>
                 </tr>
               </thead>
@@ -482,6 +408,8 @@ function App() {
                     <td>{data.stats.avg_tat.toFixed(2)}</td>
                     <td>{data.stats.avg_wt.toFixed(2)}</td>
                     <td>{data.stats.avg_rt.toFixed(2)}</td>
+                    <td>{data.stats.cpu_utilization.toFixed(2)}%</td>
+                    <td>{data.stats.throughput.toFixed(2)}</td>
                     <td>
                       <button 
                         className={`btn ${algo === viewingAlgo ? 'btn-secondary' : 'btn-primary'}`}
@@ -546,6 +474,42 @@ function App() {
                     }}
                   >
                     {data.stats.avg_rt.toFixed(1)}
+                  </div>
+                  <div className="bar-label">{algo}</div>
+                </div>
+              ))}
+            </div>
+
+            <h4>CPU Utilization</h4>
+            <div className="comparison-chart">
+              {Object.entries(compareResults).map(([algo, data], index) => (
+                <div key={index} className="chart-bar">
+                  <div 
+                    className="bar-value"
+                    style={{ 
+                      height: `${data.stats.cpu_utilization}px`,
+                      backgroundColor: getProcessColor(`P${index+1}`)
+                    }}
+                  >
+                    {data.stats.cpu_utilization.toFixed(1)}%
+                  </div>
+                  <div className="bar-label">{algo}</div>
+                </div>
+              ))}
+            </div>
+
+            <h4>Throughput</h4>
+            <div className="comparison-chart">
+              {Object.entries(compareResults).map(([algo, data], index) => (
+                <div key={index} className="chart-bar">
+                  <div 
+                    className="bar-value"
+                    style={{ 
+                      height: `${data.stats.throughput * 100}px`,
+                      backgroundColor: getProcessColor(`P${index+1}`)
+                    }}
+                  >
+                    {data.stats.throughput.toFixed(2)}
                   </div>
                   <div className="bar-label">{algo}</div>
                 </div>

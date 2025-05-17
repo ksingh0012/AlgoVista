@@ -337,7 +337,7 @@ select.control-select option:hover {
 /* Statistics Section */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 2rem;
   margin: 2rem 0;
 }
@@ -348,6 +348,16 @@ select.control-select option:hover {
   border-radius: 15px;
   text-align: center;
   transition: all 0.3s ease;
+}
+
+/* First three cards take 2 columns each */
+.stat-card:nth-child(-n+3) {
+  grid-column: span 2;
+}
+
+/* Last two cards take 3 columns each */
+.stat-card:nth-child(n+4) {
+  grid-column: span 3;
 }
 
 .stat-card:hover {
@@ -552,6 +562,11 @@ select.control-select option:hover {
   .stats-grid {
     grid-template-columns: 1fr;
   }
+
+  .stat-card:nth-child(-n+3),
+  .stat-card:nth-child(n+4) {
+    grid-column: span 1;
+  }
 }
 
 /* Animations */
@@ -734,59 +749,6 @@ select.control-select option:hover {
   content: '+';
   font-size: 1.2rem;
   font-weight: 400;
-}
-
-/* Frame by Frame View */
-.frame-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
-}
-
-.frame-card {
-  background: var(--bg-secondary);
-  padding: 1.5rem;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  border: 1px solid var(--border-color);
-}
-
-.frame-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.frame-process {
-  padding: 1rem;
-  border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  text-align: center;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.frame-details {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.75rem;
-  align-items: center;
-  font-size: 0.95rem;
-  color: var(--text-primary);
-}
-
-.frame-details > div:nth-child(odd) {
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.frame-details > div:nth-child(even) {
-  text-align: right;
-  font-family: monospace;
-  font-size: 1rem;
-  color: var(--primary-color);
 }
 
 /* Section Titles */
