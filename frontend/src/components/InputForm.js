@@ -1,53 +1,87 @@
-import React, { useState } from "react";
+import React from 'react';
 
-const InputForm = ({ onSubmit, selectedAlgo }) => {
-  const [processes, setProcesses] = useState([]);
-  const [form, setForm] = useState({ name: "", arrival_time: "", burst_time: "", priority: "" });
-  const [timeQuantum, setTimeQuantum] = useState("");
-
-  const handleAddProcess = () => {
-    setProcesses([...processes, { ...form }]);
-    setForm({ name: "", arrival_time: "", burst_time: "", priority: "" });
+const InputForm = ({ processes, handleProcessChange, addProcess, removeProcess }) => {
+  const preventArrowKeys = (e) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+    }
   };
 
-  const handleSubmit = () => {
-    const data = {
-      algorithm: selectedAlgo,
-      processes: processes.map((p) => ({
-        name: p.name,
-        arrival_time: parseInt(p.arrival_time),
-        burst_time: parseInt(p.burst_time),
-        ...(selectedAlgo.includes("PRIORITY") && { priority: parseInt(p.priority) }),
-      })),
-      ...(selectedAlgo === "Round Robin" && { time_quanta: parseInt(timeQuantum) }),
-    };
-    onSubmit(data);
+  const handleNumberInput = (e) => {
+    // Remove leading zeros in real-time
+    const value = e.target.value;
+    if (value.length > 1 && value.startsWith('0')) {
+      e.target.value = value.replace(/^0+/, '');
+    }
   };
 
   return (
-    <div>
-      <h3>Enter Process Details</h3>
-      <input placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-      <input type="number" placeholder="Arrival Time" value={form.arrival_time} onChange={(e) => setForm({ ...form, arrival_time: e.target.value })} />
-      <input type="number" placeholder="Burst Time" value={form.burst_time} onChange={(e) => setForm({ ...form, burst_time: e.target.value })} />
-      {selectedAlgo.includes("PRIORITY") && (
-        <input type="number" placeholder="Priority" value={form.priority} onChange={(e) => setForm({ ...form, priority: e.target.value })} />
-      )}
-      <button onClick={handleAddProcess}>Add Process</button>
+    <div className="card processes-section">
+      <h2 className="processes-header">Processes</h2>
+      
+      <div className="process-grid-container">
+        <div className="process-grid-header">
+          <div>Name</div>
+          <div>Arrival Time</div>
+          <div>Burst Time</div>
+          <div>Priority</div>
+          <div></div>
+        </div>
 
-      {selectedAlgo === "Round Robin" && (
-        <input type="number" placeholder="Time Quantum" value={timeQuantum} onChange={(e) => setTimeQuantum(e.target.value)} />
-      )}
-
-      <button onClick={handleSubmit}>Run</button>
-
-      <ul>
-        {processes.map((p, i) => (
-          <li key={i}>
-            {p.name} - AT: {p.arrival_time}, BT: {p.burst_time} {p.priority && `, Priority: ${p.priority}`}
-          </li>
+        {processes.map((proc, idx) => (
+          <div key={idx} className="process-row">
+            <input
+              type="text"
+              className="process-input"
+              value={proc.name}
+              onChange={e => handleProcessChange(idx, 'name', e.target.value)}
+            />
+            <input
+              type="number"
+              className="process-input"
+              value={proc.arrival_time}
+              min={0}
+              onKeyDown={preventArrowKeys}
+              onInput={handleNumberInput}
+              onChange={e => handleProcessChange(idx, 'arrival_time', e.target.value)}
+            />
+            <input
+              type="number"
+              className="process-input"
+              value={proc.burst_time}
+              min={1}
+              onKeyDown={preventArrowKeys}
+              onInput={handleNumberInput}
+              onChange={e => handleProcessChange(idx, 'burst_time', e.target.value)}
+            />
+            <div className="priority-input-container">
+              <input
+                type="number"
+                className="process-input priority-input"
+                value={proc.priority || 0}
+                min={0}
+                onKeyDown={preventArrowKeys}
+                onInput={handleNumberInput}
+                onChange={e => handleProcessChange(idx, 'priority', e.target.value)}
+              />
+            </div>
+            <button 
+              className="btn-remove"
+              onClick={() => removeProcess(idx)}
+              disabled={processes.length === 1}
+            >
+              Remove
+            </button>
+          </div>
         ))}
-      </ul>
+
+        <button 
+          className="btn-add-process"
+          onClick={addProcess}
+        >
+          Add Process
+        </button>
+      </div>
     </div>
   );
 };
