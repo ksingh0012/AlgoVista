@@ -58,7 +58,7 @@ def compare():
     results = {}
     for name, func in algo_map.items():
         try:
-            if name == "RR":
+            if name == "Round Robin":
                 gantt, table, stats = func(processes, time_quanta)
             else:
                 gantt, table, stats = func(processes)
@@ -75,7 +75,7 @@ def compare():
 @app.route("/algorithms", methods=["GET"])
 def get_algorithms():
     return jsonify({
-        "algorithms": ["First Come First Serve", "Shortest Job First", "Shotest Remaining Time First", "Longest Job First", "Longest Remaining Time First", "Round Robin", "Highest Response Ratio Next", "Priority Non-Preemptive", "Priority Preemptive"]
+        "algorithms": ["First Come First Serve", "Shortest Job First", "Shortest Remaining Time First", "Longest Job First", "Longest Remaining Time First", "Round Robin", "Highest Response Ratio Next", "Priority Non-Preemptive", "Priority Preemptive"]
     })
 
 
