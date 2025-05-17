@@ -382,10 +382,34 @@ select.control-select option:hover {
 }
 
 /* Comparison Table */
+.table-container {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  font-size: 1.8rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 2px;
+}
+
 .comparison-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1rem 0 2rem;
   background: var(--bg-primary);
   border-radius: 8px;
   overflow: hidden;
@@ -468,46 +492,90 @@ select.control-select option:hover {
 /* Comparison Charts */
 .comparison-charts {
   margin: 2rem 0;
+  overflow: hidden;
+}
+
+.chart-container {
+  background: var(--bg-secondary);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.chart-container h4 {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
 }
 
 .comparison-chart {
   display: flex;
-  justify-content: space-around;
   align-items: flex-end;
+  gap: 1.5rem;
   height: 300px;
-  padding: 2rem;
-  background: var(--bg-secondary);
-  border-radius: 15px;
-  margin: 1rem 0 3rem 0;
+  margin: 2rem 0;
+  padding-bottom: 3.5rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .chart-bar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  flex: 1;
+  min-width: 60px;
+  position: relative;
 }
 
 .bar-value {
-  width: 40px;
+  width: 100%;
+  min-width: 40px;
+  border-radius: 4px;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-weight: 600;
-  border-radius: 8px 8px 0 0;
+  padding: 0.5rem;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
 }
 
 .bar-value:hover {
-  transform: scaleY(1.05);
+  transform: scaleY(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .bar-label {
+  position: absolute;
+  bottom: -3rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-secondary);
-  transform: rotate(-45deg);
+  color: var(--text-primary);
+  text-align: center;
+  width: 60px;
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .comparison-chart {
+    padding-bottom: 4rem;
+  }
+  
+  .chart-bar {
+    min-width: 50px;
+  }
+  
+  .bar-label {
+    font-size: 0.75rem;
+    bottom: -2.8rem;
+  }
 }
 
 /* Error Message */

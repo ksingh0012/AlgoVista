@@ -1,12 +1,27 @@
 import React from 'react';
 
 const CompareChart = ({ compareResults, getProcessColor, viewAlgorithmDetails, viewingAlgo }) => {
+  const formatAlgorithmName = (algo) => {
+    const nameMap = {
+      'First Come First Serve': 'FCFS',
+      'Shortest Job First': 'SJF',
+      'Shortest Remaining Time First': 'SRTF',
+      'Longest Job First': 'LJF',
+      'Longest Remaining Time First': 'LRTF',
+      'Round Robin': 'RR',
+      'Highest Response Ratio Next': 'HRRN',
+      'Priority Non-Preemptive': 'P-NP',
+      'Priority Preemptive': 'P-P'
+    };
+    return nameMap[algo] || algo;
+  };
+
   return (
     <div className="card">
       <div className="card-header">
         <h2 className="section-title">Algorithm Comparison</h2>
       </div>
-      
+
       <div className="table-container">
         <table className="comparison-table">
           <thead>
@@ -61,7 +76,7 @@ const CompareChart = ({ compareResults, getProcessColor, viewAlgorithmDetails, v
           };
 
           return (
-            <div key={metric}>
+            <div key={metric} className="chart-container">
               <h4>{labels[metric]}</h4>
               <div className="comparison-chart">
                 {Object.entries(compareResults).map(([algo, data], index) => (
@@ -77,7 +92,7 @@ const CompareChart = ({ compareResults, getProcessColor, viewAlgorithmDetails, v
                         ? `${data.stats[metric].toFixed(1)}%`
                         : data.stats[metric].toFixed(2)}
                     </div>
-                    <div className="bar-label">{algo}</div>
+                    <div className="bar-label">{formatAlgorithmName(algo)}</div>
                   </div>
                 ))}
               </div>
