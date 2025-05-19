@@ -1,18 +1,7 @@
 from .utils import calculate_metrics, update_gantt_chart, add_to_process_table, compute_stats
 
 def run_fcfs(processes):
-    """
-    First Come First Serve scheduling algorithm
-    
-    Args:
-        processes (list): List of process dictionaries, each containing:
-            - name: Process name/identifier
-            - arrival_time: Time at which process arrives
-            - burst_time: CPU time required by the process
-            
-    Returns:
-        tuple: (gantt_chart, process_table, stats)
-    """
+  
     # Input validation
     if not processes:
         raise ValueError("Empty process list")
