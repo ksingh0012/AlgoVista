@@ -1075,7 +1075,7 @@ select.control-select option:hover {
   padding: 2rem 1.5rem;
   margin: 2rem 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  overflow-x: auto;
+  /* overflow-x: hidden; */
 }
 .gantt-compare-row {
   display: flex;
