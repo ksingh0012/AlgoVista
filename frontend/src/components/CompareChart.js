@@ -57,6 +57,46 @@ const CompareChart = ({ compareResults, getProcessColor, viewAlgorithmDetails, v
           </tbody>
         </table>
       </div>
+
+      {/* Gantt Charts Section */}
+      <h3 className="section-title">Gantt Charts</h3>
+      <div className="gantt-compare-container">
+        {Object.entries(compareResults).map(([algo, data]) => (
+          <div key={algo} className="gantt-compare-row">
+            <div className="gantt-compare-label">{algo}</div>
+            <div className="gantt-chart">
+              {data.gantt_chart.map((entry, index) => {
+                const startTime = Number(entry.start_time || entry.start).toFixed(1);
+                const endTime = Number(entry.end_time || entry.end).toFixed(1);
+                const duration = (Number(endTime) - Number(startTime)).toFixed(1);
+                return (
+                  <div 
+                    key={index} 
+                    className="gantt-block"
+                    style={{
+                      width: `${Number(duration) * 50}px`,
+                      backgroundColor: getProcessColor(entry.name || entry.process_id)
+                    }}
+                  >
+                    <div className="gantt-block-title">
+                      {entry.name || entry.process_id}
+                    </div>
+                    <div className="gantt-block-time">
+                      Start: {startTime}
+                    </div>
+                    <div className="gantt-block-time">
+                      End: {endTime}
+                    </div>
+                    <div className="gantt-block-time">
+                      Duration: {duration}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
       
       <h3 className="section-title">Performance Visualization</h3>
       <div className="comparison-charts">
@@ -69,7 +109,6 @@ const CompareChart = ({ compareResults, getProcessColor, viewAlgorithmDetails, v
             throughput: 'Throughput'
           };
           
-          // converts raw metric values into pixel heights for the bars
           const getScaledHeight = (value, metric) => {
             if (metric === 'cpu_utilization') return value;
             if (metric === 'throughput') return value * 100;

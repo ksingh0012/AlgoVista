@@ -1067,3 +1067,116 @@ select.control-select option:hover {
     color: var(--text-primary);
   }
 }
+
+/* Gantt Charts Comparison View */
+.gantt-compare-container {
+  background: var(--bg-secondary);
+  border-radius: 15px;
+  padding: 2rem 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  overflow-x: auto;
+}
+.gantt-compare-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+}
+.gantt-compare-label {
+  min-width: unset;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-right: 0;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  text-align: left;
+}
+.gantt-compare-row .gantt-chart {
+  background: #f8fafd;
+  border-radius: 15px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+  min-height: 120px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  scrollbar-width: thin;
+  scrollbar-color: #3498db #e2e8f0;
+}
+/* Chrome, Edge, Safari */
+.gantt-compare-row .gantt-chart::-webkit-scrollbar {
+  height: 10px;
+}
+.gantt-compare-row .gantt-chart::-webkit-scrollbar-thumb {
+  background: #3498db;
+  border-radius: 6px;
+}
+.gantt-compare-row .gantt-chart::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 6px;
+}
+.gantt-compare-row .gantt-block {
+  min-width: 120px;
+  height: 100px;
+  margin-right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  color: white;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-weight: 600;
+}
+.gantt-compare-row .gantt-block:last-child {
+  margin-right: 0;
+}
+.gantt-compare-row .gantt-block-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.gantt-compare-row .gantt-block-time {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0.1rem 0;
+  opacity: 0.95;
+}
+@media (max-width: 900px) {
+  .gantt-compare-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .gantt-compare-label {
+    text-align: left;
+    margin-bottom: 0.5rem;
+    margin-right: 0;
+  }
+  .gantt-compare-row .gantt-chart {
+    padding: 1rem 0.5rem;
+    min-height: 90px;
+  }
+  .gantt-compare-row .gantt-block {
+    min-width: 90px;
+    height: 70px;
+    font-size: 0.95rem;
+    margin-right: 0.3rem;
+  }
+  .gantt-compare-row .gantt-block-title {
+    font-size: 1.1rem;
+  }
+  .gantt-compare-row .gantt-block-time {
+    font-size: 0.85rem;
+  }
+}
+
+/* Remove old grid/card styles for comparison Gantt charts */
+.gantt-charts-grid, .gantt-chart-container { display: none !important; }
