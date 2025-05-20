@@ -137,8 +137,26 @@ function App() {
 
   const getProcessColor = (processName) => {
     const colors = [
-      '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFBE0B', 
-      '#FB5607', '#8338EC', '#3A86FF', '#38B000'
+        '#FF6B6B', // red
+        '#4ECDC4', // teal
+        '#45B7D1', // blue
+        '#FFBE0B', // yellow
+        '#FB5607', // orange
+        '#8338EC', // purple
+        '#3A86FF', // light blue
+        '#38B000', // green
+        '#FF006E', // magenta
+        '#FFD166', // light yellow
+        '#06D6A0', // aqua
+        '#118AB2', // steel blue
+        '#EF476F', // pink
+        '#073B4C', // dark blue
+        '#F3722C', // orange-red
+        '#43AA8B', // sea green
+        '#F9C74F', // gold
+        '#577590', // slate blue
+        '#B5179E', // violet
+        '#A3A847', // olive
     ];
     
     if (processName === 'idle') return '#CCCCCC';
