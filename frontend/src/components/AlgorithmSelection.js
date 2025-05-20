@@ -16,8 +16,8 @@ const AlgorithmSelection = ({
           <label className="control-label">Algorithm</label>
           <select 
             className="control-select"
-            value={selectedAlgo} 
-            onChange={e => setSelectedAlgo(e.target.value)}
+            value={selectedAlgo}  // show selected algo
+            onChange={e => setSelectedAlgo(e.target.value)}   // show the changed algo i.e. when update
           >
             {algorithms.map(algo => (
               <option key={algo} value={algo}>{algo}</option>

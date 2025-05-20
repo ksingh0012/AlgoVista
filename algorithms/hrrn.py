@@ -53,9 +53,7 @@ def run_hrrn(processes):
         completion_time = start_time + p["burst_time"]
 
         # Use calculate_metrics utility function
-        completion_time, tat, wt, rt = calculate_metrics(
-            p, start_time, p["burst_time"]
-        )
+        completion_time, tat, wt, rt = calculate_metrics(p, start_time, p["burst_time"])
 
         update_gantt_chart(gantt_chart, p["name"], start_time, completion_time)
         add_to_process_table(process_table, p, start_time, completion_time, tat, wt, rt)

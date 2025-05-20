@@ -69,6 +69,7 @@ const CompareChart = ({ compareResults, getProcessColor, viewAlgorithmDetails, v
             throughput: 'Throughput'
           };
           
+          // converts raw metric values into pixel heights for the bars
           const getScaledHeight = (value, metric) => {
             if (metric === 'cpu_utilization') return value;
             if (metric === 'throughput') return value * 100;

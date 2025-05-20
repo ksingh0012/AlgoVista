@@ -1,13 +1,13 @@
 # Priority P
 
-#Non-preemptive -> Different arrival time
+
 #lowest number -> Highest priority
 from .utils import calculate_metrics, update_gantt_chart, add_to_process_table, compute_stats
 
 def run_priority_p(processes):
     n = len(processes)
     
-    # Sort processes by arrival time (using utils)
+    # Sort processes by arrival time
     processes.sort(key=lambda p: p["arrival_time"])
 
     remaining_bt = [p["burst_time"] for p in processes]

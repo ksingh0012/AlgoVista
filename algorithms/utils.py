@@ -8,6 +8,7 @@ def calculate_metrics(process, start_time, burst_time):
     return completion_time, tat, wt, rt
 
 def update_gantt_chart(gantt_chart, p_name, start, end, last_process=None):
+    #avoids adding duplicate continuous entries
     if last_process is not None and last_process == p_name and gantt_chart:
         gantt_chart[-1]["end"] = end
     else:

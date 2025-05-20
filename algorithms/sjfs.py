@@ -52,10 +52,10 @@ def run_sjfs(processes):
         start_time = current_time
         completion_time = start_time + p_bt
         
-        # Use calculate_metrics to calculate TAT, WT, RT
+        # calculate TAT, WT, RT
         completion_time, tat, wt, rt = calculate_metrics(p, start_time, p_bt)
 
-        # Update Gantt Chart and Process Table using the utility functions
+        # Update Gantt Chart and Process Table
         update_gantt_chart(gantt_chart, p_name, start_time, completion_time)
         add_to_process_table(process_table, p, start_time, completion_time, tat, wt, rt)
 
@@ -66,7 +66,7 @@ def run_sjfs(processes):
         visited[idx] = True
         completed += 1
 
-    # Compute the statistics using the utility function
+    # Compute the statistics
     stats = compute_stats(length, gantt_chart, total_idle_time, total_tat, total_wt, total_rt)
 
     return gantt_chart, sorted(process_table, key=lambda x: x["name"]), stats

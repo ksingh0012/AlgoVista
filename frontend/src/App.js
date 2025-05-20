@@ -10,6 +10,7 @@ import PerformanceTable from './components/PerformanceTable';
 import CompareChart from './components/CompareChart';
 
 function App() {
+  // states (first view)
   const [algorithms, setAlgorithms] = useState([]);
   const [selectedAlgo, setSelectedAlgo] = useState('');
   const [processes, setProcesses] = useState([{ name: 'P1', arrival_time: 0, burst_time: 0 }]);
@@ -31,6 +32,7 @@ function App() {
       .catch(() => setError('Failed to fetch algorithms'));
   }, []);
 
+  // update the process data when the user edits input fields
   const handleProcessChange = (index, field, value) => {
     const newProcesses = [...processes];
     if (field === 'name') {
@@ -49,7 +51,7 @@ function App() {
 
   const removeProcess = (index) => {
     if (processes.length === 1) return;
-    const newProcesses = processes.filter((_, i) => i !== index);
+    const newProcesses = processes.filter((_, i) => i !== index); // _ -> current item
     setProcesses(newProcesses);
   };
 
@@ -58,7 +60,8 @@ function App() {
     setResult(null);
     setShowComparison(false);
 
-    const payload = {
+    // this paylod used to send data to backend
+    const payload = {       
       algorithm: selectedAlgo,
       processes,
     };

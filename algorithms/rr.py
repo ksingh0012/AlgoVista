@@ -69,15 +69,7 @@ def run_rr(processes, time_quantum):
             wt = tat - p_bt
             rt = start_times[idx] - p_at
 
-            add_to_process_table(
-                process_table,
-                p,
-                start_times[idx],
-                completion_time,
-                tat,
-                wt,
-                rt
-            )
+            add_to_process_table(process_table,p,start_times[idx],completion_time,tat,wt,rt)
 
             total_tat += tat
             total_wt += wt

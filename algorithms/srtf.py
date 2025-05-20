@@ -60,20 +60,20 @@ def run_srtf(processes):
             is_completed[idx] = True
             completed += 1
 
-            # Calculate Completion Time, TAT, WT, RT manually
+            # Calculate Completion Time, TAT, WT, RT 
             completion_time = current_time
             tat = completion_time - processes[idx]["arrival_time"]
             wt = tat - processes[idx]["burst_time"]
             rt = start_times[idx] - processes[idx]["arrival_time"]
 
-            # Add to process table using the utility function
+        
             add_to_process_table(process_table, processes[idx], start_times[idx], completion_time, tat, wt, rt)
 
             total_tat += tat
             total_wt += wt
             total_rt += rt
 
-    # Compute the statistics using the utility function
+    # Compute the statistics
     stats = compute_stats(n, gantt_chart, total_idle_time, total_tat, total_wt, total_rt)
 
     return gantt_chart, sorted(process_table, key=lambda x: x["name"]), stats

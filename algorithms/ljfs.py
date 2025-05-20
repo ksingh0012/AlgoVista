@@ -34,7 +34,7 @@ def run_ljfs(processes):
             current_time += 1
             total_idle_time += 1
 
-            # Group continuous idle time into one block
+            # Checks if any process has arrived yet if not, keeps incrementing time and counts idle time
             while True:
                 found = False
                 for i in range(length):
@@ -54,7 +54,7 @@ def run_ljfs(processes):
         start_time = current_time
         completion_time = start_time + p["burst_time"]
 
-        # Use utility function to calculate TAT, WT, RT
+        # calculate TAT, WT, RT
         completion, tat, wt, rt = calculate_metrics(p, start_time, p["burst_time"])
 
         update_gantt_chart(gantt_chart, p["name"], start_time, completion_time)
@@ -68,10 +68,10 @@ def run_ljfs(processes):
         visited[idx] = True
         completed += 1
 
-    # Sort the process table by name (or any consistent identifier)
+    # Sort the process table by name
     process_table.sort(key=lambda x: x["name"])
 
-    # Final stats from utility
+
     stats = compute_stats(length, gantt_chart, total_idle_time, total_tat, total_wt, total_rt)
 
     return gantt_chart, sorted(process_table, key=lambda x: x["name"]), stats

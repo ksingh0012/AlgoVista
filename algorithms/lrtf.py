@@ -53,7 +53,7 @@ def run_lrtf(processes):
         remaining_bt[idx] -= 1
         current_time += 1
 
-        if remaining_bt[idx] == 0:
+        if remaining_bt[idx] == 0:  # process finishes
             is_completed[idx] = True
             completed += 1
             completion_times[idx] = current_time
