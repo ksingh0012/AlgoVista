@@ -8,6 +8,7 @@ import InputForm from './components/InputForm';
 import GanttChart from './components/GanttChart';
 import PerformanceTable from './components/PerformanceTable';
 import CompareChart from './components/CompareChart';
+import ErrorPopup from './components/ErrorPopup';
 
 function App() {
   // states (first view)
@@ -55,10 +56,40 @@ function App() {
     setProcesses(newProcesses);
   };
 
+  const validateInputs = () => {
+    // Check if any process has empty or invalid values
+    for (const process of processes) {
+      if (!process.name || process.name.trim() === '') {
+        setError('Process name cannot be empty');
+        return false;
+      }
+      if (process.arrival_time < 0) {
+        setError('Arrival time cannot be negative');
+        return false;
+      }
+      if (process.burst_time <= 0) {
+        setError('Burst time must be greater than 0');
+        return false;
+      }
+    }
+
+    // Validate time quantum for Round Robin
+    if (selectedAlgo === 'Round Robin' && (timeQuanta <= 0 || !Number.isInteger(timeQuanta))) {
+      setError('Time quantum must be a positive integer');
+      return false;
+    }
+
+    return true;
+  };
+
   const runSchedule = () => {
     setError('');
     setResult(null);
     setShowComparison(false);
+
+    if (!validateInputs()) {
+      return;
+    }
 
     // this paylod used to send data to backend
     const payload = {       
@@ -81,6 +112,10 @@ function App() {
     setResult(null);
     setShowComparison(true);
     
+    if (!validateInputs()) {
+      return;
+    }
+
     try {
       const results = {};
       const basePayload = {
@@ -186,14 +221,10 @@ function App() {
         removeProcess={removeProcess}
       />
 
-      {error && (
-        <div className="error-message">
-          <span>{error}</span>
-          <button className="error-close" onClick={() => setError('')}>
-            ×
-          </button>
-        </div>
-      )}
+      <ErrorPopup 
+        message={error}
+        onClose={() => setError('')}
+      />
 
       {!showComparison && result && (
         <>

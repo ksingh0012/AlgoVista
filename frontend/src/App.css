@@ -1,13 +1,15 @@
 /* Root Styles */
 :root {
-  --primary-color: #3498db;
-  --secondary-color: #2ecc71;
-  --danger-color: #ef4444;
-  --text-primary: #2c3e50;
-  --text-secondary: #64748b;
+  --primary-color: #40916c;
+  --secondary-color: #74c69d;
+  --danger-color: #ff6b6b;
+  --text-primary: #1b4332;
+  --text-secondary: #2d6a4f;
   --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --border-color: #e2e8f0;
+  --bg-secondary: #d8f3dc;
+  --border-color: #b7e4c7;
+  --accent-light: #95d5b2;
+  --accent-dark: #081c15;
 }
 
 body {
@@ -55,10 +57,12 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   margin-bottom: 2rem;
   transition: transform 0.3s ease;
+  border: 1px solid var(--border-color);
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  border-color: var(--primary-color);
+  box-shadow: 0 10px 30px rgba(64, 145, 108, 0.1);
 }
 
 /* Controls Layout */
@@ -83,8 +87,7 @@ body {
 
 .control-group:hover {
   border-color: var(--primary-color);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(64, 145, 108, 0.08);
 }
 
 .control-group .control-label {
@@ -120,14 +123,13 @@ select.control-select {
 
 select.control-select:hover {
   border-color: var(--primary-color);
-  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
-  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(64, 145, 108, 0.15);
 }
 
 select.control-select:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.2);
 }
 
 select.control-select option {
@@ -168,7 +170,7 @@ select.control-select option:hover {
 .control-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.1);
 }
 
 .control-input[type="number"] {
@@ -206,25 +208,25 @@ select.control-select option:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #3498db, #2980b9);
+  background: linear-gradient(135deg, var(--primary-color), var(--text-primary));
   color: white;
-  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 15px rgba(64, 145, 108, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+  box-shadow: 0 6px 20px rgba(64, 145, 108, 0.4);
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, #34495e, #2c3e50);
+  background: linear-gradient(135deg, var(--text-secondary), var(--text-primary));
   color: white;
-  box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
+  box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
 }
 
 .btn-secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(52, 73, 94, 0.4);
+  box-shadow: 0 6px 20px rgba(45, 106, 79, 0.4);
 }
 
 .btn:active {
@@ -722,9 +724,8 @@ select.control-select option:hover {
 }
 
 .process-row:hover {
-  transform: none;
   border-color: var(--primary-color);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px rgba(64, 145, 108, 0.05);
 }
 
 .process-input {
@@ -741,7 +742,7 @@ select.control-select option:hover {
 .process-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.1);
   background-color: white;
 }
 
@@ -777,9 +778,9 @@ select.control-select option:hover {
 }
 
 .btn-remove:hover {
-  background-color: #dc2626;
+  background-color: #ff5252;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
 }
 
 .btn-remove:disabled {
@@ -793,7 +794,7 @@ select.control-select option:hover {
   padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--secondary-color), #27ae60);
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
   color: white;
   font-weight: 600;
   cursor: pointer;
@@ -809,8 +810,7 @@ select.control-select option:hover {
 }
 
 .btn-add-process:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+  box-shadow: 0 4px 15px rgba(116, 198, 157, 0.3);
 }
 
 .btn-add-process::before {
@@ -944,7 +944,7 @@ select.control-select option:hover {
 
 .time-quanta-section:hover {
   border-color: var(--primary-color);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px rgba(64, 145, 108, 0.05);
 }
 
 .time-quanta-section h3 {
@@ -971,7 +971,7 @@ select.control-select option:hover {
 .time-quanta-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.1);
 }
 
 .time-quanta-input:hover {
@@ -1005,7 +1005,7 @@ select.control-select option:hover {
 .control-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.1);
 }
 
 .control-input:hover {
@@ -1096,7 +1096,7 @@ select.control-select option:hover {
 .gantt-compare-row .gantt-chart {
   background: #f8fafd;
   border-radius: 15px;
-  padding: 1.2rem 1.5rem;
+  padding: 1.2rem 0.5rem;
   display: flex;
   align-items: center;
   overflow-x: auto;
@@ -1180,3 +1180,65 @@ select.control-select option:hover {
 
 /* Remove old grid/card styles for comparison Gantt charts */
 .gantt-charts-grid, .gantt-chart-container { display: none !important; }
+
+/* Error Popup Styles */
+.error-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(8, 28, 21, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.error-popup {
+  background-color: var(--bg-primary);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(8, 28, 21, 0.1);
+  min-width: 300px;
+  max-width: 90%;
+  animation: slideIn 0.3s ease-out;
+  border: 2px solid var(--border-color);
+}
+
+.error-popup-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.error-icon {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.error-popup p {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.error-popup-close {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.error-popup-close:hover {
+  background-color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(8, 28, 21, 0.2);
+}
