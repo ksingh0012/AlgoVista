@@ -1,4 +1,4 @@
-#AlgoVista
+# AlgoVista
 
 🔄 CPU Scheduling Visualizer
 CPU Scheduling Visualizer is a web-based interactive educational tool that helps users understand and simulate various CPU scheduling algorithms with real-time Gantt charts and performance metrics. This project was developed as part of a Software Engineering course (SE(OS)-VI-T164) by Team ALPHA.
@@ -49,8 +49,6 @@ Frontend Setup:
 cd frontend
 npm install
 npm start
-
-Open your browser and go to http://localhost:3000
 
 👨‍💻 Team ALPHA – SE(OS)-VI-T164
 - Aditya Chauhan – Team Lead
